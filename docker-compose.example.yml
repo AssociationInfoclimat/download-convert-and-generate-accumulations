@@ -1,0 +1,11 @@
+services:
+  download_and_convert_radar:
+    build: .
+    container_name: download_and_convert_radar
+    volumes:
+      - ./data:/media/datastore
+    environment:
+      DB_HOST: 127.0.0.1
+      DB_USER: user
+      DB_PASSWORD: password
+      APPLICATION_ID: application_id

@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "generate_radaric_mf_values_accumulations"
+version = "0.1.0"
+description = ""
+authors = ["Naej <jean.lecordier@infoclimat.fr>", "Fred59 <frederic.ameye@infoclimat.fr>"]
+
+[tool.poetry.dependencies]
+python = ">=3.12,<3.13"
+sqlalchemy = "^2.0.25"
+GDAL = "3.11.0"
+numpy = "2.3.1"
+numpy-indexed = "^0.3.7"
+scipy = "^1.12.0"
+black = "^24.1.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

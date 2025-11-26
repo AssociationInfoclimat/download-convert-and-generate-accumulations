@@ -40,4 +40,4 @@ RUN poetry config virtualenvs.in-project true \
 
 WORKDIR /app
 
-CMD ["sleep", "infinity"]
+CMD ["php", "/app/src/download-and-convert-radar.php"]

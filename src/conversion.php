@@ -207,7 +207,7 @@ function compute_cumuls_from_all_zones(
         cd {$PYTHON_SCRIPT_PROJECT_PATH} && poetry run python ./generate_radaric_mf_values_accumulations/main.py --timestamp {$timestamp} >> /var/log/infoclimat/generate-radaric-mf-values-accumulations.log 2>> /var/log/infoclimat/generate-radaric-mf-values-accumulations.error.log
         SH;
     $outputer->echo("Running : {$command}\n");
-    $outputer->echo($command_executor->exec($command) ?? '');
+    $outputer->echo($command_executor->shell_exec($command) ?? '');
 }
 
 function convert_hd5_to_colored_tif(

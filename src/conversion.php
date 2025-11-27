@@ -199,13 +199,15 @@ function compute_cumuls(
 
 function compute_cumuls_from_all_zones(
     int             $timestamp,
-    CommandExecutor $command_executor
+    CommandExecutor $command_executor,
+    Outputer        $outputer = new FakeOutputer()
 ): void {
     $PYTHON_SCRIPT_PROJECT_PATH = dirname(__DIR__) . '/generate-radaric-mf-values-accumulations';
     $command = <<<SH
         cd {$PYTHON_SCRIPT_PROJECT_PATH} && poetry run python ./generate_radaric_mf_values_accumulations/main.py --timestamp {$timestamp} >> /var/log/infoclimat/generate-radaric-mf-values-accumulations.log 2>> /var/log/infoclimat/generate-radaric-mf-values-accumulations.error.log
         SH;
-    $command_executor->exec($command);
+    $outputer->echo("Running : {$command}\n");
+    $outputer->echo($command_executor->exec($command) ?? '');
 }
 
 function convert_hd5_to_colored_tif(
@@ -747,7 +749,8 @@ function execute_download_conversion_and_generate_accumulations(
 
     compute_cumuls_from_all_zones(
         $timestamp,
-        $command_executor
+        $command_executor,
+        $outputer
     );
 }
 

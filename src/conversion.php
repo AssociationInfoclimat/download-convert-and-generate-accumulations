@@ -116,7 +116,7 @@ function convert_h5_to_tif(
     $outputer->echo($command_executor->shell_exec($create_tmp_ram_copy) ?? '');
     $outputer->echo("Running : {$convert_command}\n");
     $outputer->echo($command_executor->shell_exec($convert_command) ?? '');
-    $file_mover->moveFile($tif_tmp_ram_path, $tif_file_path, $outputer);
+    $file_mover->moveFile($tif_tmp_ram_path, $tif_file_path, null, $outputer);
 }
 
 function color_tif(
@@ -170,7 +170,7 @@ function color_tif(
     $outputer->echo($command_executor->shell_exec($create_tmp_ram_copy) ?? '');
     $outputer->echo("Running : {$convert_command}\n");
     $outputer->echo($command_executor->shell_exec($convert_command) ?? '');
-    $file_mover->moveFile($colored_tmp_ram_path, $colored_file_path, $outputer);
+    $file_mover->moveFile($colored_tmp_ram_path, $colored_file_path, null, $outputer);
 }
 
 function compute_cumuls(

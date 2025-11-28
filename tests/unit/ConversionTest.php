@@ -124,7 +124,7 @@ final class ConversionTest extends TestCase
             $command_executor->commands
         );
         $this->assertSame(
-            [['/dev/shm/path.tif', '/disk/path.tif']],
+            [['/dev/shm/path.tif', '/disk/path.tif', null]],
             $file_mover->moved
         );
         $this->assertSame(
@@ -169,7 +169,7 @@ final class ConversionTest extends TestCase
             $command_executor->commands
         );
         $this->assertSame(
-            [['/dev/shm/path.tif', '/disk/path.tif']],
+            [['/dev/shm/path.tif', '/disk/path.tif', null]],
             $file_mover->moved
         );
         $this->assertSame(
@@ -244,7 +244,7 @@ final class ConversionTest extends TestCase
             $command_executor->commands
         );
         $this->assertSame(
-            [['/dev/shm/colored.tif', '/disk/colored.tif']],
+            [['/dev/shm/colored.tif', '/disk/colored.tif', null]],
             $file_mover->moved
         );
         $this->assertSame(
@@ -287,7 +287,7 @@ final class ConversionTest extends TestCase
             $command_executor->commands
         );
         $this->assertSame(
-            [['/dev/shm/colored.tif', '/disk/colored.tif']],
+            [['/dev/shm/colored.tif', '/disk/colored.tif', null]],
             $file_mover->moved
         );
         $this->assertSame(
@@ -360,8 +360,8 @@ final class ConversionTest extends TestCase
         );
         $this->assertSame(
             [
-                ['/dev/shm/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.tif', "{$TILES_PATH}/2000/06/15/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.tif"],
-                ['/dev/shm/radaric_MF_METROPOLE_12_v30.tif', "{$TILES_PATH}/2000/06/15/radaric_MF_METROPOLE_12_v30.tif"],
+                ['/dev/shm/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.tif', TILES_PATH . "/2000/06/15/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.tif", null],
+                ['/dev/shm/radaric_MF_METROPOLE_12_v30.tif', TILES_PATH . "/2000/06/15/radaric_MF_METROPOLE_12_v30.tif", null],
             ],
             $file_mover->moved
         );

@@ -487,6 +487,7 @@ final class RadarTest extends TestCase
                 [
                     '/tmp/mosaiques_MF_LAME_D_EAU_METROPOLE_last.h5',
                     TILES_PATH . '/2000/06/15/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.h5',
+                    null,
                 ],
             ],
             $file_mover->moved
@@ -551,6 +552,7 @@ final class RadarTest extends TestCase
                 [
                     '/tmp/mosaiques_MF_LAME_D_EAU_METROPOLE_last.h5',
                     TILES_PATH . '/2000/06/15/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.h5',
+                    null,
                 ],
             ],
             $file_mover->moved
@@ -634,10 +636,12 @@ final class RadarTest extends TestCase
                 [
                     '/tmp/mosaiques_MF_LAME_D_EAU_ANTILLES_last.h5',
                     TILES_PATH . '/2000/06/15/mosaiques_MF_LAME_D_EAU_ANTILLES_12_v30.h5',
+                    null,
                 ],
                 [
                     '/tmp/mosaiques_MF_LAME_D_EAU_REUNION_last.h5',
                     TILES_PATH . '/2000/06/15/mosaiques_MF_LAME_D_EAU_REUNION_12_v30.h5',
+                    null,
                 ],
             ],
             $file_mover->moved

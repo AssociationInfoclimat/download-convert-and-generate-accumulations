@@ -282,7 +282,7 @@ function download_data_type_for_zone(
         $outputer->echo("Replacing existing {$data_type} of {$zone} (maille {$maille}) at {$timestamp}. Last timestamp was {$previous_last_timestamp}.\n");
     }
     $final_path = get_file_path($timestamp, $data_type, $zone);
-    $file_mover->moveFile($tmp_path, $final_path, $outputer);
+    $file_mover->moveFile($tmp_path, $final_path, null, $outputer);
     if (!$replace_existing) {
         update_last_timestamp(
             $data_type,

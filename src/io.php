@@ -202,6 +202,16 @@ class StubFileExistanceChecker implements FileExistanceChecker
     }
 }
 
+function change_ownership(
+    string   $from,
+    int      $ownerGroupId,
+    Outputer $outputer = new FakeOutputer()
+): void {
+    @chown($from, $ownerGroupId);
+    @chgrp($from, $ownerGroupId);
+    $outputer->echo("Changing ownership of {$from} to id = '{$ownerGroupId}'\n");
+}
+
 function create_folder_if_needed(
     string   $file_path,
     Outputer $outputer = new FakeOutputer()
@@ -225,7 +235,12 @@ function move_file(
 
 interface FileMover
 {
-    public function moveFile(string $from, string $to, ?Outputer $outputer): void;
+    public function moveFile(
+        string    $from,
+        string    $to,
+        ?int      $ownerGroupId = null,
+        ?Outputer $outputer = new FakeOutputer()
+    ): void;
 }
 
 class RealFileMover implements FileMover
@@ -233,8 +248,12 @@ class RealFileMover implements FileMover
     public function moveFile(
         string    $from,
         string    $to,
+        ?int      $ownerGroupId = null,
         ?Outputer $outputer = new FakeOutputer()
     ): void {
+        if ($ownerGroupId !== null) {
+            change_ownership($from, $ownerGroupId, $outputer);
+        }
         move_file($from, $to, $outputer);
     }
 }
@@ -246,9 +265,14 @@ class InMemoryFileMover implements FileMover
     public function moveFile(
         string    $from,
         string    $to,
+        ?int      $ownerGroupId = null,
         ?Outputer $outputer = new FakeOutputer()
     ): void {
-        $this->moved[] = [$from, $to];
-        $outputer->echo("Moving {$from} to {$to}\n");
+        $this->moved[] = [$from, $to, $ownerGroupId];
+        $outputer->echo(
+            $ownerGroupId
+                ? "Moving {$from} to {$to} with owner id = '{$ownerGroupId}'\n"
+                : "Moving {$from} to {$to}\n"
+        );
     }
 }

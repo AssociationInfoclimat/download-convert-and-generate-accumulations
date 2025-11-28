@@ -3,7 +3,7 @@ import time
 from typing import Any, Iterable, Optional, Protocol
 
 import numpy
-from generate_radaric_mf_values_accumulations.arguments import Arguments
+from .arguments import Arguments
 from osgeo import gdal
 from scipy import integrate, interpolate
 

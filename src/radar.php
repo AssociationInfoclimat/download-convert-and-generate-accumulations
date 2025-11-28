@@ -28,6 +28,7 @@ use function Infoclimat\Date\hh_of;
 use function Infoclimat\Date\ii_of;
 
 use const Infoclimat\Env\TILES_PATH;
+use const Infoclimat\Env\UID_GID;
 
 // contact.api@meteo.fr
 const API_URL = 'https://public-api.meteofrance.fr/public/DPRadar/v1/mosaiques';
@@ -282,7 +283,7 @@ function download_data_type_for_zone(
         $outputer->echo("Replacing existing {$data_type} of {$zone} (maille {$maille}) at {$timestamp}. Last timestamp was {$previous_last_timestamp}.\n");
     }
     $final_path = get_file_path($timestamp, $data_type, $zone);
-    $file_mover->moveFile($tmp_path, $final_path, null, $outputer);
+    $file_mover->moveFile($tmp_path, $final_path, UID_GID, $outputer);
     if (!$replace_existing) {
         update_last_timestamp(
             $data_type,

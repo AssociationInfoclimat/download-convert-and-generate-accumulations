@@ -26,6 +26,7 @@ use function Infoclimat\Radar\Conversion\get_tif_path;
 use function Infoclimat\Radar\Conversion\get_tmp_ram_path;
 
 use const Infoclimat\Env\TILES_PATH;
+use const Infoclimat\Env\UID_GID;
 
 final class ConversionTest extends TestCase
 {
@@ -124,9 +125,10 @@ final class ConversionTest extends TestCase
             $command_executor->commands
         );
         $this->assertSame(
-            [['/dev/shm/path.tif', '/disk/path.tif', null]],
+            [['/dev/shm/path.tif', '/disk/path.tif', UID_GID]],
             $file_mover->moved
         );
+        $UID_GID = UID_GID;
         $this->assertSame(
             <<<TXT
                 Replacing existing tif /disk/path.tif
@@ -135,7 +137,7 @@ final class ConversionTest extends TestCase
                   - to tif /disk/path.tif
                 Running : cp /disk/path.h5 /dev/shm/path.h5 2>&1
                 Running : gdalwarp -t_srs EPSG:3857 -tr 300 300 -r lanczos -srcnodata 65535 -co 'COMPRESS=LZW' -co 'PREDICTOR=YES' -of COG -overwrite HDF5:"/dev/shm/path.h5"://dataset1/data1/data /dev/shm/path.tif 2>&1
-                Moving /dev/shm/path.tif to /disk/path.tif\n
+                Moving /dev/shm/path.tif to /disk/path.tif with owner id '{$UID_GID}'\n
                 TXT,
             $outputer->output
         );
@@ -169,9 +171,10 @@ final class ConversionTest extends TestCase
             $command_executor->commands
         );
         $this->assertSame(
-            [['/dev/shm/path.tif', '/disk/path.tif', null]],
+            [['/dev/shm/path.tif', '/disk/path.tif', UID_GID]],
             $file_mover->moved
         );
+        $UID_GID = UID_GID;
         $this->assertSame(
             <<<TXT
                 Converting :
@@ -179,7 +182,7 @@ final class ConversionTest extends TestCase
                   - to tif /disk/path.tif
                 Running : cp /disk/path.h5 /dev/shm/path.h5 2>&1
                 Running : gdalwarp -t_srs EPSG:3857 -tr 300 300 -r lanczos -srcnodata 65535 -co 'COMPRESS=LZW' -co 'PREDICTOR=YES' -of COG -overwrite HDF5:"/dev/shm/path.h5"://dataset1/data1/data /dev/shm/path.tif 2>&1
-                Moving /dev/shm/path.tif to /disk/path.tif\n
+                Moving /dev/shm/path.tif to /disk/path.tif with owner id '{$UID_GID}'\n
                 TXT,
             $outputer->output
         );
@@ -244,9 +247,10 @@ final class ConversionTest extends TestCase
             $command_executor->commands
         );
         $this->assertSame(
-            [['/dev/shm/colored.tif', '/disk/colored.tif', null]],
+            [['/dev/shm/colored.tif', '/disk/colored.tif', UID_GID]],
             $file_mover->moved
         );
+        $UID_GID = UID_GID;
         $this->assertSame(
             <<<TXT
                 Replacing existing colored tif /disk/colored.tif
@@ -255,7 +259,7 @@ final class ConversionTest extends TestCase
                   - to colored tif /disk/colored.tif
                 Running : cp /disk/path.tif /dev/shm/path.tif 2>&1
                 Running : gdaldem color-relief /dev/shm/path.tif {$this->palette_path} /dev/shm/colored.tif -alpha -nearest_color_entry -co 'COMPRESS=JPEG' -co 'PREDICTOR=YES' -of COG 2>&1
-                Moving /dev/shm/colored.tif to /disk/colored.tif\n
+                Moving /dev/shm/colored.tif to /disk/colored.tif with owner id '{$UID_GID}'\n
                 TXT,
             $outputer->output
         );
@@ -287,9 +291,10 @@ final class ConversionTest extends TestCase
             $command_executor->commands
         );
         $this->assertSame(
-            [['/dev/shm/colored.tif', '/disk/colored.tif', null]],
+            [['/dev/shm/colored.tif', '/disk/colored.tif', UID_GID]],
             $file_mover->moved
         );
+        $UID_GID = UID_GID;
         $this->assertSame(
             <<<TXT
                 Converting :
@@ -297,7 +302,7 @@ final class ConversionTest extends TestCase
                   - to colored tif /disk/colored.tif
                 Running : cp /disk/path.tif /dev/shm/path.tif 2>&1
                 Running : gdaldem color-relief /dev/shm/path.tif {$this->palette_path} /dev/shm/colored.tif -alpha -nearest_color_entry -co 'COMPRESS=JPEG' -co 'PREDICTOR=YES' -of COG 2>&1
-                Moving /dev/shm/colored.tif to /disk/colored.tif\n
+                Moving /dev/shm/colored.tif to /disk/colored.tif with owner id '{$UID_GID}'\n
                 TXT,
             $outputer->output
         );
@@ -360,8 +365,8 @@ final class ConversionTest extends TestCase
         );
         $this->assertSame(
             [
-                ['/dev/shm/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.tif', TILES_PATH . "/2000/06/15/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.tif", null],
-                ['/dev/shm/radaric_MF_METROPOLE_12_v30.tif', TILES_PATH . "/2000/06/15/radaric_MF_METROPOLE_12_v30.tif", null],
+                ['/dev/shm/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.tif', TILES_PATH . "/2000/06/15/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.tif", UID_GID],
+                ['/dev/shm/radaric_MF_METROPOLE_12_v30.tif', TILES_PATH . "/2000/06/15/radaric_MF_METROPOLE_12_v30.tif", UID_GID],
             ],
             $file_mover->moved
         );
@@ -369,6 +374,7 @@ final class ConversionTest extends TestCase
             ['radaric_MF_METROPOLE' => strtotime('2000-06-15T12:30:00Z')],
             $last_tiles_timestamp_repository->getLastTilesTimestamps()
         );
+        $UID_GID = UID_GID;
         $this->assertSame(
             <<<TXT
                 Converting :
@@ -376,13 +382,13 @@ final class ConversionTest extends TestCase
                   - to tif {$TILES_PATH}/2000/06/15/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.tif
                 Running : cp /media/datastore/tempsreel.infoclimat.net/tiles/2000/06/15/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.h5 /dev/shm/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.h5 2>&1
                 Running : gdalwarp -t_srs EPSG:3857 -tr 300 300 -r lanczos -srcnodata 65535 -co 'COMPRESS=LZW' -co 'PREDICTOR=YES' -of COG -overwrite HDF5:"/dev/shm/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.h5"://dataset1/data1/data /dev/shm/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.tif 2>&1
-                Moving /dev/shm/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.tif to /media/datastore/tempsreel.infoclimat.net/tiles/2000/06/15/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.tif
+                Moving /dev/shm/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.tif to /media/datastore/tempsreel.infoclimat.net/tiles/2000/06/15/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.tif with owner id '{$UID_GID}'
                 Converting :
                   - tif {$TILES_PATH}/2000/06/15/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.tif
                   - to colored tif {$TILES_PATH}/2000/06/15/radaric_MF_METROPOLE_12_v30.tif
                 Running : cp /media/datastore/tempsreel.infoclimat.net/tiles/2000/06/15/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.tif /dev/shm/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.tif 2>&1
                 Running : gdaldem color-relief /dev/shm/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.tif {$this->palette_path} /dev/shm/radaric_MF_METROPOLE_12_v30.tif -alpha -nearest_color_entry -co 'COMPRESS=JPEG' -co 'PREDICTOR=YES' -of COG 2>&1
-                Moving /dev/shm/radaric_MF_METROPOLE_12_v30.tif to /media/datastore/tempsreel.infoclimat.net/tiles/2000/06/15/radaric_MF_METROPOLE_12_v30.tif\n
+                Moving /dev/shm/radaric_MF_METROPOLE_12_v30.tif to /media/datastore/tempsreel.infoclimat.net/tiles/2000/06/15/radaric_MF_METROPOLE_12_v30.tif with owner id '{$UID_GID}'\n
                 TXT,
             $outputer->output
         );

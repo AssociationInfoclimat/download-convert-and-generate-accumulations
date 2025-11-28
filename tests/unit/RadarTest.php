@@ -33,6 +33,7 @@ use function Infoclimat\Radar\get_timestamp_from_content_disposition;
 use function Infoclimat\Radar\update_last_timestamp;
 
 use const Infoclimat\Env\TILES_PATH;
+use const Infoclimat\Env\UID_GID;
 
 final class RadarTest extends TestCase
 {
@@ -487,7 +488,7 @@ final class RadarTest extends TestCase
                 [
                     '/tmp/mosaiques_MF_LAME_D_EAU_METROPOLE_last.h5',
                     TILES_PATH . '/2000/06/15/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.h5',
-                    null,
+                    UID_GID,
                 ],
             ],
             $file_mover->moved
@@ -498,11 +499,12 @@ final class RadarTest extends TestCase
         );
         $ROOT = __ROOT__;
         $TILES_PATH = TILES_PATH;
+        $UID_GID = UID_GID;
         $this->assertSame(
             <<<TXT
                 Downloading LAME_D_EAU of METROPOLE (maille 500) [https://public-api.meteofrance.fr/public/DPRadar/v1/mosaiques/METROPOLE/observations/LAME_D_EAU/produit?maille=500] to /tmp/mosaiques_MF_LAME_D_EAU_METROPOLE_last.h5
                 Date from content-disposition header is : 20000615123045 (2000-06-15 12:30:45 UTC [961072245])
-                Moving /tmp/mosaiques_MF_LAME_D_EAU_METROPOLE_last.h5 to {$TILES_PATH}/2000/06/15/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.h5
+                Moving /tmp/mosaiques_MF_LAME_D_EAU_METROPOLE_last.h5 to {$TILES_PATH}/2000/06/15/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.h5 with owner id '{$UID_GID}'
                 Updating mosaiques_MF_LAME_D_EAU_METROPOLE to 961072245
                 LAME_D_EAU of METROPOLE at 961072245 : DONE\n\n
                 TXT,
@@ -552,7 +554,7 @@ final class RadarTest extends TestCase
                 [
                     '/tmp/mosaiques_MF_LAME_D_EAU_METROPOLE_last.h5',
                     TILES_PATH . '/2000/06/15/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.h5',
-                    null,
+                    UID_GID,
                 ],
             ],
             $file_mover->moved
@@ -562,11 +564,12 @@ final class RadarTest extends TestCase
             $last_tiles_timestamps_repository->timestamps
         );
         $TILES_PATH = TILES_PATH;
+        $UID_GID = UID_GID;
         $this->assertSame(
             <<<TXT
                 Downloading LAME_D_EAU of METROPOLE (maille 500) [https://public-api.meteofrance.fr/public/DPRadar/v1/mosaiques/METROPOLE/observations/LAME_D_EAU/produit?maille=500] to /tmp/mosaiques_MF_LAME_D_EAU_METROPOLE_last.h5
                 Date from content-disposition header is : 20000615123045 (2000-06-15 12:30:45 UTC [961072245])
-                Moving /tmp/mosaiques_MF_LAME_D_EAU_METROPOLE_last.h5 to {$TILES_PATH}/2000/06/15/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.h5
+                Moving /tmp/mosaiques_MF_LAME_D_EAU_METROPOLE_last.h5 to {$TILES_PATH}/2000/06/15/mosaiques_MF_LAME_D_EAU_METROPOLE_12_v30.h5 with owner id '{$UID_GID}'
                 Updating mosaiques_MF_LAME_D_EAU_METROPOLE to 961072245
                 LAME_D_EAU of METROPOLE at 961072245 : DONE\n\n
                 TXT,
@@ -636,12 +639,12 @@ final class RadarTest extends TestCase
                 [
                     '/tmp/mosaiques_MF_LAME_D_EAU_ANTILLES_last.h5',
                     TILES_PATH . '/2000/06/15/mosaiques_MF_LAME_D_EAU_ANTILLES_12_v30.h5',
-                    null,
+                    UID_GID,
                 ],
                 [
                     '/tmp/mosaiques_MF_LAME_D_EAU_REUNION_last.h5',
                     TILES_PATH . '/2000/06/15/mosaiques_MF_LAME_D_EAU_REUNION_12_v30.h5',
-                    null,
+                    UID_GID,
                 ],
             ],
             $file_mover->moved
@@ -656,17 +659,18 @@ final class RadarTest extends TestCase
         );
         $ROOT = __ROOT__;
         $TILES_PATH = TILES_PATH;
+        $UID_GID = UID_GID;
         $this->assertSame(
             <<<TXT
                 Downloading LAME_D_EAU of ANTILLES (maille 500) [https://public-api.meteofrance.fr/public/DPRadar/v1/mosaiques/ANTILLES/observations/LAME_D_EAU/produit?maille=500] to /tmp/mosaiques_MF_LAME_D_EAU_ANTILLES_last.h5
                 Date from content-disposition header is : 20000615123045 (2000-06-15 12:30:45 UTC [961072245])
-                Moving /tmp/mosaiques_MF_LAME_D_EAU_ANTILLES_last.h5 to {$TILES_PATH}/2000/06/15/mosaiques_MF_LAME_D_EAU_ANTILLES_12_v30.h5
+                Moving /tmp/mosaiques_MF_LAME_D_EAU_ANTILLES_last.h5 to {$TILES_PATH}/2000/06/15/mosaiques_MF_LAME_D_EAU_ANTILLES_12_v30.h5 with owner id '{$UID_GID}'
                 Updating mosaiques_MF_LAME_D_EAU_ANTILLES to 961072245
                 LAME_D_EAU of ANTILLES at 961072245 : DONE
                 
                 Downloading LAME_D_EAU of REUNION (maille 500) [https://public-api.meteofrance.fr/public/DPRadar/v1/mosaiques/REUNION/observations/LAME_D_EAU/produit?maille=500] to /tmp/mosaiques_MF_LAME_D_EAU_REUNION_last.h5
                 Date from content-disposition header is : 20000615123045 (2000-06-15 12:30:45 UTC [961072245])
-                Moving /tmp/mosaiques_MF_LAME_D_EAU_REUNION_last.h5 to {$TILES_PATH}/2000/06/15/mosaiques_MF_LAME_D_EAU_REUNION_12_v30.h5
+                Moving /tmp/mosaiques_MF_LAME_D_EAU_REUNION_last.h5 to {$TILES_PATH}/2000/06/15/mosaiques_MF_LAME_D_EAU_REUNION_12_v30.h5 with owner id '{$UID_GID}'
                 Updating mosaiques_MF_LAME_D_EAU_REUNION to 961072245
                 LAME_D_EAU of REUNION at 961072245 : DONE
                 

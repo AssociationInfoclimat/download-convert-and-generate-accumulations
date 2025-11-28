@@ -209,7 +209,7 @@ function change_ownership(
 ): void {
     @chown($from, $ownerGroupId);
     @chgrp($from, $ownerGroupId);
-    $outputer->echo("Changing ownership of {$from} to id = '{$ownerGroupId}'\n");
+    $outputer->echo("Changing ownership of {$from} to id '{$ownerGroupId}'\n");
 }
 
 function create_folder_if_needed(
@@ -271,7 +271,7 @@ class InMemoryFileMover implements FileMover
         $this->moved[] = [$from, $to, $ownerGroupId];
         $outputer->echo(
             $ownerGroupId
-                ? "Moving {$from} to {$to} with owner id = '{$ownerGroupId}'\n"
+                ? "Moving {$from} to {$to} with owner id '{$ownerGroupId}'\n"
                 : "Moving {$from} to {$to}\n"
         );
     }

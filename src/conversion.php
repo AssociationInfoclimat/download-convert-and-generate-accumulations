@@ -31,6 +31,7 @@ use function Infoclimat\Radar\execute_download;
 use function Infoclimat\Radar\get_file_key;
 use function Infoclimat\Radar\get_tile_path;
 
+use const Infoclimat\Env\UID_GID;
 use const Infoclimat\Radar\LAME_D_EAU;
 use const Infoclimat\Radar\ZONES;
 
@@ -116,7 +117,7 @@ function convert_h5_to_tif(
     $outputer->echo($command_executor->shell_exec($create_tmp_ram_copy) ?? '');
     $outputer->echo("Running : {$convert_command}\n");
     $outputer->echo($command_executor->shell_exec($convert_command) ?? '');
-    $file_mover->moveFile($tif_tmp_ram_path, $tif_file_path, null, $outputer);
+    $file_mover->moveFile($tif_tmp_ram_path, $tif_file_path, UID_GID, $outputer);
 }
 
 function color_tif(
@@ -170,7 +171,7 @@ function color_tif(
     $outputer->echo($command_executor->shell_exec($create_tmp_ram_copy) ?? '');
     $outputer->echo("Running : {$convert_command}\n");
     $outputer->echo($command_executor->shell_exec($convert_command) ?? '');
-    $file_mover->moveFile($colored_tmp_ram_path, $colored_file_path, null, $outputer);
+    $file_mover->moveFile($colored_tmp_ram_path, $colored_file_path, UID_GID, $outputer);
 }
 
 function compute_cumuls(

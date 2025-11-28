@@ -1,4 +1,4 @@
-FROM ghcr.io/osgeo/gdal:ubuntu-full-3.11.0
+FROM ghcr.io/osgeo/gdal:ubuntu-full-3.12.0
 
 WORKDIR /app
 
@@ -36,7 +36,7 @@ RUN composer install
 WORKDIR /app/generate-radaric-mf-values-accumulations
 
 RUN poetry config virtualenvs.in-project true \
-    && poetry install --no-interaction --no-ansi --only main 
+    && poetry install --no-interaction --no-ansi --only main
 
 WORKDIR /app
 

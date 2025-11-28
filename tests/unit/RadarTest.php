@@ -11,14 +11,15 @@ require_once __ROOT__ . '/io.php';
 
 use Exception;
 use Infoclimat\IO\FakeOutputer;
+use Infoclimat\IO\InMemoryFileMover;
 use Infoclimat\MeteoFrance\API\CurlResponse;
 use Infoclimat\MeteoFrance\API\InMemoryAPIFileDownloader;
 use Infoclimat\Radar\InMemoryFileAppender;
-use Infoclimat\Radar\InMemoryFileMover;
 use Infoclimat\Tiles\InMemoryLastTilesTimestampsRepository;
 use PHPUnit\Framework\TestCase;
 
-use function Infoclimat\Radar\create_folder_if_needed;
+use function Infoclimat\IO\create_folder_if_needed;
+use function Infoclimat\IO\move_file;
 use function Infoclimat\Radar\download_data_type;
 use function Infoclimat\Radar\download_data_type_for_zone;
 use function Infoclimat\Radar\download_file;
@@ -29,7 +30,6 @@ use function Infoclimat\Radar\get_file_key;
 use function Infoclimat\Radar\get_file_path;
 use function Infoclimat\Radar\get_previous_last_timestamp;
 use function Infoclimat\Radar\get_timestamp_from_content_disposition;
-use function Infoclimat\Radar\move_file;
 use function Infoclimat\Radar\update_last_timestamp;
 
 use const Infoclimat\Env\TILES_PATH;

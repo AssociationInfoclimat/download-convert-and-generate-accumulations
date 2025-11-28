@@ -14,7 +14,9 @@ use DateTime;
 use DateTimeZone;
 use Exception;
 use Infoclimat\IO\FakeOutputer;
+use Infoclimat\IO\FileMover;
 use Infoclimat\IO\Outputer;
+use Infoclimat\IO\RealFileMover;
 use Infoclimat\IO\RealOutputer;
 use Infoclimat\MeteoFrance\API\APIFileDownloader;
 use Infoclimat\MeteoFrance\API\CurlResponse;
@@ -229,57 +231,6 @@ function update_last_timestamp(
     $last_tiles_timestamps_repository->updateLastTileTimestamp($key, $timestamp);
 }
 
-function create_folder_if_needed(
-    string   $file_path,
-    Outputer $outputer = new FakeOutputer()
-): void {
-    $dir = dirname($file_path);
-    if (!is_dir($dir)) {
-        mkdir($dir, 0777, true);
-        $outputer->echo("Creating folder : {$dir}\n");
-    }
-}
-
-function move_file(
-    string   $from,
-    string   $to,
-    Outputer $outputer = new FakeOutputer()
-): void {
-    create_folder_if_needed($to, $outputer);
-    rename($from, $to);
-    $outputer->echo("Moving {$from} to {$to}\n");
-}
-
-interface FileMover
-{
-    public function moveFile(string $from, string $to, ?Outputer $outputer): void;
-}
-
-class RealFileMover implements FileMover
-{
-    public function moveFile(
-        string    $from,
-        string    $to,
-        ?Outputer $outputer = new FakeOutputer()
-    ): void {
-        move_file($from, $to, $outputer);
-    }
-}
-
-class InMemoryFileMover implements FileMover
-{
-    public array $moved = [];
-
-    public function moveFile(
-        string    $from,
-        string    $to,
-        ?Outputer $outputer = new FakeOutputer()
-    ): void {
-        $this->moved[] = [$from, $to];
-        $outputer->echo("Moving {$from} to {$to}\n");
-    }
-}
-
 /**
  * @throws Exception
  */
@@ -370,10 +321,9 @@ function download_data_type(
         } catch (Exception $e) {
             $outputer->echo(
                 <<<TXT
-An error occurred while downloading {$data_type} of {$zone} (maille {$maille}) :
-{$e->getMessage()}
-
-TXT
+                    An error occurred while downloading {$data_type} of {$zone} (maille {$maille}) :
+                    {$e->getMessage()}\n
+                    TXT
             );
         }
     }

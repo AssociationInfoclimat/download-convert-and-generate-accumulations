@@ -201,3 +201,54 @@ class StubFileExistanceChecker implements FileExistanceChecker
         return in_array($file, $this->files);
     }
 }
+
+function create_folder_if_needed(
+    string   $file_path,
+    Outputer $outputer = new FakeOutputer()
+): void {
+    $dir = dirname($file_path);
+    if (!is_dir($dir)) {
+        mkdir($dir, 0777, true);
+        $outputer->echo("Creating folder : {$dir}\n");
+    }
+}
+
+function move_file(
+    string   $from,
+    string   $to,
+    Outputer $outputer = new FakeOutputer()
+): void {
+    create_folder_if_needed($to, $outputer);
+    rename($from, $to);
+    $outputer->echo("Moving {$from} to {$to}\n");
+}
+
+interface FileMover
+{
+    public function moveFile(string $from, string $to, ?Outputer $outputer): void;
+}
+
+class RealFileMover implements FileMover
+{
+    public function moveFile(
+        string    $from,
+        string    $to,
+        ?Outputer $outputer = new FakeOutputer()
+    ): void {
+        move_file($from, $to, $outputer);
+    }
+}
+
+class InMemoryFileMover implements FileMover
+{
+    public array $moved = [];
+
+    public function moveFile(
+        string    $from,
+        string    $to,
+        ?Outputer $outputer = new FakeOutputer()
+    ): void {
+        $this->moved[] = [$from, $to];
+        $outputer->echo("Moving {$from} to {$to}\n");
+    }
+}

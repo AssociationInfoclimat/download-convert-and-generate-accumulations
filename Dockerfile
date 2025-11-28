@@ -1,4 +1,4 @@
-FROM ghcr.io/osgeo/gdal:ubuntu-full-3.12.0
+FROM ghcr.io/osgeo/gdal:ubuntu-full-3.11.0
 
 WORKDIR /app
 
